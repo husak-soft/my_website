@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 const ACCENT_GREEN = "#39FF14";
 const ACCENT_GREEN_RGB = "57, 255, 20";
@@ -463,9 +464,9 @@ const App: React.FC = () => {
 		);
 	};
 
-	// Portfolio
 	const PortfolioSection: React.FC = () => {
 		const [selectedCategory, setSelectedCategory] = useState("All");
+
 		const categories = [
 			"All",
 			"Web",
@@ -474,55 +475,62 @@ const App: React.FC = () => {
 			"E-Commerce",
 			"FinTech",
 		];
+
+		// 2. Add the link property to each project object
+
 		const projects = [
 			{
 				id: 1,
-				title: "Nexus AI Trading Platform",
-				client: "GlobalTrade Inc.",
-				category: "FinTech",
+				title: "Nero Budget",
 				description:
-					"Real-time high-frequency trading platform with AI-powered analytics",
+					"An AI-driven financial assistant that simplifies money management through automated expense tracking with OCR and proactive, conversational insights.",
+				link: "https://nerobudget.ai",
+				image: "/images/Screenshot (230).png",
 			},
 			{
 				id: 2,
-				title: "Lumen AR Shopping App",
-				client: "RetailFuture",
-				category: "E-Commerce",
-				description: "AR-enabled mobile shopping experience",
+				title: "Wedfluencer",
+				description:
+					"A dedicated social marketplace bridging the gap between wedding influencers and vendors, creating a community-driven ecosystem for collaborations.",
+				link: "https://www.wedfluencer.com",
+				image: "/images/Screenshot (229).png",
 			},
 			{
 				id: 3,
-				title: "MediConnect Portal",
-				client: "HealthTech Solutions",
-				category: "Web",
-				description: "Patient management and telemedicine platform",
+				title: "Sleet",
+				description:
+					"A logistics management platform with a specialized real-time tracking engine and predictive analytics for the complex supply chain landscape.",
+				link: "https://sleet.sa",
+				image: "/images/Screenshot (228).png",
 			},
 			{
 				id: 4,
-				title: "SmartAnalytics Dashboard",
-				client: "DataVision Corp",
-				category: "AI/ML",
-				description: "Real-time business intelligence and predictive analytics",
+				title: "Ordrio",
+				description:
+					"A powerful, custom Shopify solution offering deep backend customization and complex API integrations that standard apps cannot provide.",
+				link: "https://ordrio.com/",
+				image: "/images/Screenshot (227).png",
 			},
 			{
 				id: 5,
-				title: "FitTrack Mobile",
-				client: "WellnessNow",
-				category: "Mobile",
-				description: "AI-powered fitness tracking and meal planning",
+				title: "Tabseera",
+				description:
+					"An innovative e-learning platform focused on personalized learning paths and interactive content to enhance knowledge retention.",
+				link: "https://www.tabsera.com/",
+				image: "/images/Screenshot (226).png",
 			},
 			{
 				id: 6,
-				title: "CloudStore Platform",
+				title: "BluntlyAI",
 				client: "Enterprise Solutions",
-				category: "E-Commerce",
-				description: "B2B marketplace with advanced inventory management",
+				description:
+					"An AI data analyst that cuts through the noise, transforming complex datasets into clear, actionable insights and automated reports using multiple LLMs.",
+				link: "https://www.bluntly-ai.com/",
+				image: "/images/Screenshot (225).png",
 			},
 		];
-		const filteredProjects =
-			selectedCategory === "All"
-				? projects
-				: projects.filter((p) => p.category === selectedCategory);
+
+		const filteredProjects = selectedCategory === "All" ? projects : projects;
 
 		return (
 			<section id="portfolio" className="py-24 bg-[#1A1A1A]">
@@ -540,21 +548,7 @@ const App: React.FC = () => {
 							various industries.
 						</p>
 					</div>
-					<div className="flex flex-wrap justify-center gap-4 mb-16 reveal-on-scroll">
-						{categories.map((category) => (
-							<button
-								key={category}
-								onClick={() => setSelectedCategory(category)}
-								className={`px-6 py-2 rounded-full font-medium transition-all ${
-									selectedCategory === category
-										? "bg-accent text-black"
-										: "border border-gray-700 text-white hover:border-accent"
-								}`}
-							>
-								{category}
-							</button>
-						))}
-					</div>
+
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 						{filteredProjects.map((project, idx) => (
 							<div
@@ -563,23 +557,35 @@ const App: React.FC = () => {
 								style={{ transitionDelay: `${idx * 100}ms` }}
 							>
 								<div className="aspect-video bg-gray-900 flex items-center justify-center text-[#A0A0A0] relative overflow-hidden">
-									<span className="relative z-10">[Project Image]</span>
+									<span className="relative z-10">
+										<Image
+											src={project.image}
+											width={500}
+											height={500}
+											alt="Picture of the author"
+										/>
+									</span>
 									<div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/10 transition-colors" />
 								</div>
 								<div className="p-6">
-									<span className="text-xs font-semibold uppercase tracking-widest text-accent">
+									{/* <span className="text-xs font-semibold uppercase tracking-widest text-accent">
 										{project.category}
-									</span>
+									</span> */}
 									<h3 className="text-2xl font-bold text-white mt-2 mb-1">
 										{project.title}
 									</h3>
-									<p className="text-sm text-[#A0A0A0] mb-3">
-										Client: {project.client}
-									</p>
+
 									<p className="text-[#A0A0A0] mb-4">{project.description}</p>
-									<button className="inline-flex items-center text-sm font-semibold text-accent hover:opacity-80">
-										View Details →
-									</button>
+
+									{/* 3. Change button to an anchor tag using project.link */}
+									<a
+										href={project.link}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="inline-flex items-center text-sm font-semibold text-accent hover:opacity-80 transition-opacity"
+									>
+										{project.link}
+									</a>
 								</div>
 							</div>
 						))}
