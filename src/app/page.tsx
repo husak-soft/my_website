@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { MessageCircle } from "lucide-react"; // Assuming you use lucide-react for icons
 
 const ACCENT_GREEN = "#39FF14";
 const ACCENT_GREEN_RGB = "57, 255, 20";
@@ -236,13 +237,13 @@ const App: React.FC = () => {
 				>
 					Workflow
 				</a>
-				<a
+				{/* <a
 					href="#team"
 					className="text-white hover-text-accent transition duration-300"
 					onClick={isMobile ? toggleMenu : undefined}
 				>
 					Team
-				</a>
+				</a> */}
 				<a
 					href="#testimonials"
 					className="text-white hover-text-accent transition duration-300"
@@ -738,7 +739,7 @@ const App: React.FC = () => {
 									>
 										<div className="bg-[#141414] p-8 rounded-2xl border border-gray-800 glow-hover">
 											<div className="md:hidden flex items-center gap-4 mb-4">
-												<div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0">
+												<div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center shrink-0">
 													<Icon className="w-6 h-6 text-black" />
 												</div>
 												<span className="text-xs font-semibold uppercase tracking-widest text-accent">
@@ -822,6 +823,35 @@ const App: React.FC = () => {
 		</section>
 	);
 
+	const WhatsAppContact: React.FC = () => {
+		const phoneNumber = "+923249611363"; // Replace with your actual number
+		const message = encodeURIComponent(
+			"Hello! I'm interested in working with the architects."
+		);
+
+		return (
+			<a
+				href={`https://wa.me/${phoneNumber}?text=${message}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				className="fixed bottom-8 right-8 z-50 group"
+			>
+				{/* Tooltip */}
+				<span className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#1A1A1A] text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-white/10 whitespace-nowrap">
+					Chat with us
+				</span>
+
+				{/* Button */}
+				<div className="relative p-4 rounded-full bg-[#074d1e] border border-white/10 text-white transition-all duration-300 hover:border-accent hover:scale-110 shadow-2xl glow-hover">
+					{/* Subtle Green Pulse Indication */}
+					<div className="absolute inset-0 rounded-full bg-[#25D366] opacity-0 group-hover:opacity-10 blur-md transition-opacity"></div>
+
+					<MessageCircle size={28} className="relative z-10" />
+				</div>
+			</a>
+		);
+	};
+
 	// Testimonials
 	const TestimonialsSection: React.FC = () => {
 		const testimonials = [
@@ -902,11 +932,11 @@ const App: React.FC = () => {
 										<Star key={i} className="w-5 h-5 text-accent" />
 									))}
 								</div>
-								<p className="text-[#A0A0A0] mb-6 flex-grow italic">
+								<p className="text-[#A0A0A0] mb-6 grow italic">
 									"{testimonial.text}"
 								</p>
 								<div className="flex items-center gap-4 pt-4 border-t border-gray-800">
-									<div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center text-[#A0A0A0] text-xs border-2 border-accent flex-shrink-0">
+									<div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center text-[#A0A0A0] text-xs border-2 border-accent shrink-0">
 										[Photo]
 									</div>
 									<div>
@@ -1079,7 +1109,7 @@ const App: React.FC = () => {
 										</h3>
 									</div>
 									<ChevronDown
-										className={`w-6 h-6 text-accent transition-transform flex-shrink-0 ml-4 ${
+										className={`w-6 h-6 text-accent transition-transform shrink-0 ml-4 ${
 											openId === faq.id ? "rotate-180" : ""
 										}`}
 									/>
@@ -1137,11 +1167,11 @@ const App: React.FC = () => {
 								<div className="space-y-4">
 									<div className="flex items-center text-white">
 										<Mail className="w-5 h-5 mr-3 text-accent" />
-										<span className="text-[#A0A0A0]">contact@husak.io</span>
+										<span className="text-[#A0A0A0]">husak.soft@gmail.com</span>
 									</div>
 									<div className="flex items-center text-white">
 										<Phone className="w-5 h-5 mr-3 text-accent" />
-										<span className="text-[#A0A0A0]">+1 (555) 123-4567</span>
+										<span className="text-[#A0A0A0]">+923249611363</span>
 									</div>
 								</div>
 							</div>
@@ -1289,13 +1319,15 @@ const App: React.FC = () => {
       `}</style>
 
 			<Header />
+			<WhatsAppContact />
+
 			<main>
 				<HomeSection />
 				{/* <WorkSection /> */}
 				<PortfolioSection />
 				<ServicesSection />
 				<WorkflowSection />
-				<TeamSection />
+				{/* <TeamSection /> */}
 				<TestimonialsSection />
 				<FAQSection />
 				<ContactSection />
