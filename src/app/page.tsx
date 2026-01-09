@@ -282,9 +282,7 @@ const App: React.FC = () => {
                 </svg>
                 <span>Any Question?</span>
               </span>
-              <span className="text-white font-bold text-lg mt-1">
-                +1 234 567 890
-              </span>
+              <span className="text-white font-bold text-lg mt-1">+92-317-678-2564</span>
             </div>
 
             <button
@@ -465,9 +463,9 @@ const App: React.FC = () => {
       loop: false,
       mode: "free-snap",
       slides: { perView: 1.5, spacing: 20 },
-	  created(s) {
-    setNumSlides(s.track.details.slides.length);
-  },
+      created(s) {
+        setNumSlides(s.track.details.slides.length);
+      },
       breakpoints: {
         "(min-width: 640px)": { slides: { perView: 2.5, spacing: 20 } },
         "(min-width: 1024px)": { slides: { perView: 3, spacing: 24 } },
@@ -777,7 +775,7 @@ const App: React.FC = () => {
   );
 
   const WhatsAppContact: React.FC = () => {
-    const phoneNumber = "+923176782564";
+    const phoneNumber = "+92-317-678-2564";
     const message = encodeURIComponent(
       "Hello! I'm interested in working with the architects."
     );
@@ -1127,7 +1125,7 @@ const App: React.FC = () => {
                 <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
                   <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                   <span className="text-[#A0A0A0] text-center sm:text-left">
-                    +923176782564
+                    +92-317-678-2564
                   </span>
                 </div>
               </div>
