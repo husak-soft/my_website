@@ -203,56 +203,57 @@ const App: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-const NavLinks: React.FC<{ isMobile?: boolean }> = ({
-  isMobile = false,
-}) => {
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isMobile && toggleMenu) {
-      toggleMenu();
-    }
-    // Optional: Add smooth scroll for anchor links
-    const href = e.currentTarget.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      e.preventDefault();
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
+    const NavLinks: React.FC<{ isMobile?: boolean }> = ({
+      isMobile = false,
+    }) => {
+      const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (isMobile && toggleMenu) {
+          toggleMenu();
+        }
+        // Optional: Add smooth scroll for anchor links
+        const href = e.currentTarget.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          const element = document.querySelector(href);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      };
 
-  return (
-    <nav
-      className={
-        isMobile
-          ? "flex flex-col space-y-4 pt-4 pb-8"
-          : "space-x-8 text-lg font-medium"
-      }
-    >
-      {['Home', 'Portfolio', 'Services', 'Workflow', 'FAQ', 'Contact'].map((item) => {
-        const href = `#${item.toLowerCase()}`;
-        
-        return (
-          <a
-            key={item}
-            href={href}
-            className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
-            onClick={handleClick}
-          >
-            {item}
-            {/* Underline that animates from left to right on hover and completes the animation */}
-            <span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out group-hover:transition-all group-hover:duration-300 group-hover:ease-out"></span>
-          </a>
-        );
-      })}
-    </nav>
-  );
-};
+      return (
+        <nav
+          className={
+            isMobile
+              ? "flex flex-col space-y-4 pt-4 pb-8"
+              : "space-x-8 text-lg font-medium"
+          }
+        >
+          {["Home", "Portfolio", "Services", "Workflow", "Contact"].map(
+            (item) => {
+              const href = `#${item.toLowerCase()}`;
 
+              return (
+                <a
+                  key={item}
+                  href={href}
+                  className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
+                  onClick={handleClick}
+                >
+                  {item}
+                  {/* Underline that animates from left to right on hover and completes the animation */}
+                  <span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out group-hover:transition-all group-hover:duration-300 group-hover:ease-out"></span>
+                </a>
+              );
+            }
+          )}
+        </nav>
+      );
+    };
 
     return (
       <header className="sticky top-0 z-50 bg-[#0A0A0A] bg-opacity-95 backdrop-blur-sm border-b border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-2 flex justify-between items-center relative">
           <a
             href="#home"
             className={`flex items-center space-x-2 text-2xl font-black tracking-widest text-accent ${logoFont.className}`}
@@ -260,15 +261,32 @@ const NavLinks: React.FC<{ isMobile?: boolean }> = ({
             HUSAK
           </a>
           <div className="flex items-center space-x-4">
-            <div className="hidden md:flex">
+            <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
               <NavLinks />
             </div>
-            <a
-              href="#contact"
-              className="hidden md:inline-flex px-5 py-2 rounded-full border border-accent text-accent text-md font-semibold glow-hover hover:bg-accent hover:text-black"
-            >
-              Start Project
-            </a>
+            <div className="hidden md:flex flex-col items-end bg-accent/10 px-4 py-2 rounded-lg">
+              <span className="text-green-500 font-semibold flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.494a1 1 0 01-.212 1.04l-2.257 2.257a16.043 16.043 0 006.586 6.586l2.257-2.257a1 1 0 011.04-.212l4.494 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z"
+                  />
+                </svg>
+                <span>Any Question?</span>
+              </span>
+              <span className="text-white font-bold text-lg mt-1">
+                +1 234 567 890
+              </span>
+            </div>
+
             <button
               className="md:hidden p-2 rounded-lg border border-gray-700 text-white hover-border-accent transition duration-300 z-50 ml-4"
               onClick={toggleMenu}
@@ -315,13 +333,6 @@ const NavLinks: React.FC<{ isMobile?: boolean }> = ({
         >
           <div className="px-4 pt-4 sm:px-6">
             <NavLinks isMobile={true} />
-            <a
-              href="#contact"
-              className="block w-full text-center px-5 py-3 mb-6 rounded-full bg-accent text-black font-bold text-lg hover:opacity-90 transition duration-300"
-              onClick={toggleMenu}
-            >
-              Start Project
-            </a>
           </div>
         </div>
       </header>
@@ -413,7 +424,7 @@ const NavLinks: React.FC<{ isMobile?: boolean }> = ({
     return (
       <section
         id="home"
-        className="hero-tech-bg pt-32 pb-24 md:pt-40 md:pb-32 min-h-[85vh] flex flex-col justify-center items-center text-center relative overflow-hidden"
+        className="hero-tech-bg pt-24 pb-24 md:pt-28 md:pb-32 min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center text-center relative overflow-hidden"
       >
         <canvas id="tech-stars-canvas" className="absolute inset-0 z-0" />
         <div className="max-w-6xl mx-auto px-4 reveal-on-scroll relative z-10">
@@ -447,96 +458,96 @@ const NavLinks: React.FC<{ isMobile?: boolean }> = ({
     );
   };
 
-const PortfolioSection: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const PortfolioSection: React.FC = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [numSlides, setNumSlides] = useState(0);
+    const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
+      loop: false,
+      mode: "free-snap",
+      slides: { perView: 1.5, spacing: 20 },
+	  created(s) {
+    setNumSlides(s.track.details.slides.length);
+  },
+      breakpoints: {
+        "(min-width: 640px)": { slides: { perView: 2.5, spacing: 20 } },
+        "(min-width: 1024px)": { slides: { perView: 3, spacing: 24 } },
+      },
+      slideChanged(s) {
+        setCurrentSlide(s.track.details.rel);
+      },
+    });
 
+    return (
+      <section id="portfolio" className="py-24 bg-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center reveal-on-scroll">
+            <span className="text-sm font-semibold uppercase tracking-[0.5em] text-accent mb-4 block">
+              OUR WORK
+            </span>
+            <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
+              Portfolio
+            </h2>
+            <p className="text-xl text-[#A0A0A0] max-w-3xl mx-auto">
+              Explore our collection of completed projects showcasing
+              innovation, technical excellence, and design mastery across
+              various industries.
+            </p>
+          </div>
 
-  const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
-    loop: false,
-    mode: 'free-snap',
-    slides: { perView: 1.5, spacing: 20 },
-    breakpoints: {
-      '(min-width: 640px)': { slides: { perView: 2.5, spacing: 20 } },
-      '(min-width: 1024px)': { slides: { perView: 3, spacing: 24 } },
-    },
-    slideChanged(s) {
-      setCurrentSlide(s.track.details.rel)
-    },
-  })
-
-  return (
-    <section id="portfolio" className="py-24 bg-[#1A1A1A]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center reveal-on-scroll">
-          <span className="text-sm font-semibold uppercase tracking-[0.5em] text-accent mb-4 block">
-            OUR WORK
-          </span>
-          <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
-            Portfolio
-          </h2>
-          <p className="text-xl text-[#A0A0A0] max-w-3xl mx-auto">
-            Explore our collection of completed projects showcasing innovation,
-            technical excellence, and design mastery across various industries.
-          </p>
-        </div>
-
-        {/* Carousel */}
-        <div ref={sliderRef} className="keen-slider mb-6">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="keen-slider__slide bg-[#141414] rounded-2xl overflow-hidden border border-gray-800 glow-hover group"
-            >
-              <div className="aspect-video bg-gray-900 flex items-center justify-center text-[#A0A0A0] relative overflow-hidden">
-                <span className="relative z-10">
-                  <Image
-                    src={project.image}
-                    width={500}
-                    height={500}
-                    alt={project.title}
-                  />
-                </span>
-                <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/10 transition-colors" />
+          {/* Carousel */}
+          <div ref={sliderRef} className="keen-slider mb-6">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className="keen-slider__slide bg-[#141414] rounded-2xl overflow-hidden border border-gray-800 glow-hover group"
+              >
+                <div className="aspect-video bg-gray-900 flex items-center justify-center text-[#A0A0A0] relative overflow-hidden">
+                  <span className="relative z-10">
+                    <Image
+                      src={project.image}
+                      width={500}
+                      height={500}
+                      alt={project.title}
+                    />
+                  </span>
+                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/10 transition-colors" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-white mt-2 mb-1">
+                    {project.title}
+                  </h3>
+                  <p className="text-[#A0A0A0] mb-4">{project.description}</p>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-sm font-semibold text-accent hover:opacity-80 transition-opacity"
+                  >
+                    {project.link}
+                  </a>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mt-2 mb-1">
-                  {project.title}
-                </h3>
-                <p className="text-[#A0A0A0] mb-4">{project.description}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-sm font-semibold text-accent hover:opacity-80 transition-opacity"
-                >
-                  {project.link}
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Dots */}
-        {slider && (
-          <div className="flex justify-center space-x-2 mt-4">
-            {Array.from({ length: slider.current?.track?.details.slides.length || 1 }).map(
-              (_, idx) => (
+          {/* Dots */}
+          {slider && numSlides > 0 && (
+            <div className="flex justify-center space-x-2 mt-4">
+              {Array.from({ length: numSlides }).map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => slider.current?.moveToIdx(idx)}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    currentSlide === idx ? 'bg-accent' : 'bg-gray-700'
+                    currentSlide === idx ? "bg-accent" : "bg-gray-700"
                   }`}
                 />
-              )
-            )}
-          </div>
-        )}
-      </div>
-    </section>
-  )
-}
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  };
 
   // Services
   const ServicesSection: React.FC = () => (
@@ -1084,47 +1095,48 @@ const PortfolioSection: React.FC = () => {
   };
 
   // Contact
-const ContactSection: React.FC = () => {
-  return (
-    <section id="contact" className="py-24 bg-[#1A1A1A]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#141414] p-8 md:p-12 rounded-2xl reveal-on-scroll border border-gray-800 flex flex-col items-center text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-accent mb-2 block">
-            Initiate Connection
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
-            Ready To Start Your Project?
-          </h2>
-          <p className="text-[#A0A0A0] mb-8 max-w-lg">
-            Tell us about your project, your challenges, and your vision. We'll respond within one business cycle.
-          </p>
+  const ContactSection: React.FC = () => {
+    return (
+      <section id="contact" className="py-24 bg-[#1A1A1A]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-[#141414] p-8 md:p-12 rounded-2xl reveal-on-scroll border border-gray-800 flex flex-col items-center text-center">
+            <span className="text-sm font-semibold uppercase tracking-widest text-accent mb-2 block">
+              Initiate Connection
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
+              Ready To Start Your Project?
+            </h2>
+            <p className="text-[#A0A0A0] mb-8 max-w-lg">
+              Tell us about your project, your challenges, and your vision.
+              We'll respond within one business cycle.
+            </p>
 
-          <div className="space-y-4 w-full max-w-md">
-            {/* Email Row */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-                <Mail className="w-5 h-5 text-accent flex-shrink-0" />
-                <span className="text-[#A0A0A0] break-all sm:break-words text-center sm:text-left">
-                  husak.soft@gmail.com
-                </span>
+            <div className="space-y-4 w-full max-w-md">
+              {/* Email Row */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
+                  <Mail className="w-5 h-5 text-accent flex-shrink-0" />
+                  <span className="text-[#A0A0A0] break-all sm:break-words text-center sm:text-left">
+                    husak.soft@gmail.com
+                  </span>
+                </div>
               </div>
-            </div>
-            
-            {/* Phone Row */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-                <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                <span className="text-[#A0A0A0] text-center sm:text-left">
-                  +923176782564
-                </span>
+
+              {/* Phone Row */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
+                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
+                  <span className="text-[#A0A0A0] text-center sm:text-left">
+                    +923176782564
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  };
 
 
 
