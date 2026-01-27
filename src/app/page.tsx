@@ -583,7 +583,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                 <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
                   <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                   <span className="text-[#A0A0A0] break-all sm:break-words text-center sm:text-left">
-                    husak.soft@gmail.com
+                    husak.softdev@gmail.com
                   </span>
                 </div>
               </div>
