@@ -55,15 +55,42 @@ export const projects = [
   },
   {
     id: 7,
+    title: "Propellus",
+    description:
+      "AI-powered travel intelligence platform that curates highly personalized journeys, moving beyond standard booking to deliver a unique adventure for every user.",
+    image: "/images/propellus.png",
+    tags: ["PostgresSQL", "AWS", "NextJs", "NestJs"],
+    link: "https://propellus.co/",
+  },
+  {
+    id: 8,
+    title: "Wedfluencer",
+    description:
+      "A dedicated social marketplace bridging the gap between wedding influencers and vendors, creating a community-driven ecosystem for collaborations.",
+    image: "/images/wedfluencer.png",
+    tags: ["Azure", "Stripe", "Redis", "ExpressJs", "ReactJs"],
+    link: "https://wedfluencer.com/",
+  },
+  {
+    id: 9,
+    title: "Boekee",
+    description:
+      "An AI-powered financial assistant for automated bookkeeping, expense tracking, and financial reporting.",
+    image: "/images/boekee.png",
+    tags: ["OpenAI", "NextJs", "NestJs", "AWS"],
+    link: "https://www.boekie-ai.nl/",
+  },
+  {
+    id: 10,
     title: "FitTrack",
     description:
       "AI-powered fitness tracking and meal planning application helping users achieve their health goals with personalized recommendations.",
     image: "/images/fittrack.png",
-    tags: ["Firebase", "Nextjs", "Tailwind", "Shadcn"],
+    tags: ["Firebase", "NextJs", "Tailwind", "Shadcn"],
     link: "https://fittrack.com/",
   },
   {
-    id: 8,
+    id: 11,
     title: "ZipCodeAI",
     description:
       "An AI-powered tool that delivers predictive insights and demographic trends at a hyper-local zip code level for precise decision-making.",
