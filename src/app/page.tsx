@@ -153,7 +153,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                 <span>Any Question?</span>
               </span>
               <span className="text-white font-bold text-lg mt-1">
-                +92-3416429260
+                +92-3265773718
               </span>
             </div>
 
@@ -539,7 +539,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
   };
 
   const WhatsAppContact: React.FC = () => {
-    const phoneNumber = "+92-3416429260";
+    const phoneNumber = "+92-3265773718";
     const message = encodeURIComponent(
       "Hello! I'm interested in working with the architects.",
     );
@@ -592,7 +592,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                 <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
                   <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                   <span className="text-[#A0A0A0] text-center sm:text-left">
-                    +92-3416429260
+                    +92-3265773718
                   </span>
                 </div>
               </div>
