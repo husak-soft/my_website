@@ -2,14 +2,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import { MessageCircle, ArrowRight, ExternalLink } from "lucide-react";
 
 import { projects } from "../data/projects";
 import { featuredServices } from "@/data/services";
-
+import { TAG_MAPPING, DefaultIcon } from "../data/techStackIcons";
+import { featuredStack } from "../data/techStack";
+import { ScrollReveal } from "@/lib/scroll-reveal";
+import accentStyles from "@/app/styles/accent";
 // Colors
-const ACCENT_GREEN = "#39FF14";
-const ACCENT_GREEN_RGB = "57, 255, 20";
 const Mail = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg
     className={className}
@@ -70,39 +71,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
 
   const App: React.FC = () => {
     // Scroll Reveal
-    useEffect(() => {
-    const isElementInViewport = (el: Element): boolean => {
-      const rect: DOMRect = el.getBoundingClientRect();
-      const windowHeight =
-        window.innerHeight || document.documentElement.clientHeight;
-      return (
-        rect.top <= windowHeight - 150 &&
-        rect.left <=
-          (window.innerWidth || document.documentElement.clientWidth) &&
-        rect.bottom >= 0 &&
-        rect.right >= 0
-      );
-    };
-
-    const handleScrollReveal = () => {
-      const elements: NodeListOf<Element> =
-        document.querySelectorAll(".reveal-on-scroll");
-      elements.forEach((element: Element) => {
-        if (isElementInViewport(element)) {
-          if (element instanceof HTMLElement) {
-            element.classList.add("active");
-          }
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScrollReveal);
-    handleScrollReveal();
-
-    return () => {
-      window.removeEventListener("scroll", handleScrollReveal);
-    };
-  }, []);
+  useEffect(() => ScrollReveal(), []);
 
   // Header
   const Header: React.FC = () => {
@@ -134,7 +103,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
               : "space-x-8 text-lg font-medium"
           }
         >
-          {["Home", "Portfolio", "Services", "Contact"].map((item) => {
+          {["Home", "Portfolio", "Services", "Tools", "Contact"].map((item) => {
             const href = `#${item.toLowerCase()}`;
             return (
               <a
@@ -157,9 +126,9 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-2 flex justify-between items-center relative">
           <a
             href="#home"
-            className="flex items-center space-x-2 text-2xl font-black tracking-widest text-accent"
+            className="flex items-center space-x-2 text-2xl font-black tracking-widest text-white"
           >
-            HUSAK
+            HUSAK<span className="text-accent">.</span>
           </a>
           <div className="flex items-center space-x-4">
             <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
@@ -323,7 +292,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
       >
         <canvas id="tech-stars-canvas" className="absolute inset-0 z-0" />
         <div className="max-w-6xl mx-auto px-4 reveal-on-scroll relative z-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.5em] text-accent mb-6">
+          <p className="text-md font-bold uppercase tracking-[0.5em] text-accent mb-6">
             STRATEGY | DESIGN | CODE
           </p>
           <h1 className="text-6xl md:text-8xl lg:text-[100px] font-extrabold tracking-tighter leading-none mb-8 text-white">
@@ -361,8 +330,8 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
     return (
       <section id="portfolio" className="py-24 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center reveal-on-scroll">
-            <span className="text-sm font-semibold uppercase tracking-[0.5em] text-accent mb-4 block">
+          <div className="mb-16 reveal-on-scroll text-center">
+            <span className="text-md font-bold uppercase tracking-[0.5em] text-accent mb-4 block">
               OUR WORK
             </span>
             <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
@@ -381,16 +350,28 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                 key={project.id}
                 className={`group ${index > 0 ? "hidden md:block" : ""}`}
               >
-                <div className="bg-[#141414] rounded-2xl overflow-hidden border border-gray-800 glow-hover h-full flex flex-col">
-                  {/* Project Image */}
-                  <div className="aspect-video overflow-hidden">
+                <div
+                  className="bg-[#141414] rounded-2xl overflow-hidden border border-gray-800 glow-hover h-full flex flex-col reveal-on-scroll"
+                  style={{ transitionDelay: `${(index % 3) * 50}ms` }}
+                >
+                  {/* Image Container */}
+                  <div className="aspect-video overflow-hidden relative">
                     <Image
                       src={project.image}
                       alt={project.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-accent text-black font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-2"
+                      >
+                        View Project <ExternalLink size={18} />
+                      </a>
+                    </div>
                   </div>
                   {/* Project Info */}
                   <div className="p-6 flex flex-col flex-grow">
@@ -402,23 +383,21 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                     </p>
                     <div className="mt-auto">
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.slice(0, 3).map((tag, i) => (
-                          <span
-                            key={i}
-                            className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                        {project.tags.slice(0, 3).map((tag, i) => {
+                          const mapping = TAG_MAPPING[tag];
+                          const Icon = mapping?.icon || DefaultIcon;
+                          const color = mapping?.color || "#9CA3AF";
+                          return (
+                            <span
+                              key={i}
+                              className="flex items-center gap-1 text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full border border-gray-700 hover:border-gray-600 transition-colors"
+                            >
+                              <Icon style={{ color }} className="w-3 h-3" />
+                              {tag}
+                            </span>
+                          );
+                        })}
                       </div>
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent hover:underline font-medium text-sm inline-flex items-center gap-1"
-                      >
-                        Visit Site <ArrowRight className="w-4 h-4" />
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -446,10 +425,10 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
       <section id="services" className="py-24 bg-[#0A0A0A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16 reveal-on-scroll text-center">
-            <span className="text-sm font-semibold uppercase tracking-[0.5em] text-accent mb-4 block">
+            <span className="text-md font-bold uppercase tracking-[0.5em] text-accent mb-4 block">
               WHAT WE OFFER
             </span>
-            <h2 className="text-5xl font-extrabold text-white mb-4">
+            <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
               Services
             </h2>
             <p className="text-[#A0A0A0] max-w-xl mx-auto">
@@ -474,7 +453,6 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
                     {service.title}
                   </h3>
                   <p className="text-[#A0A0A0] mb-4">{service.description}</p>
-
                 </div>
               );
             })}
@@ -485,7 +463,7 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
               href="/services"
               className="px-8 py-4 rounded-xl border border-gray-700 text-white font-semibold text-lg hover:border-accent glow-hover inline-flex items-center gap-2 group transition-all duration-300"
             >
-              View all Services
+              View All Services
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -494,6 +472,71 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
     );
   };
 
+
+  const TechStackSection: React.FC = () => {
+    return (
+      <section id="tools" className="py-24 bg-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-16 reveal-on-scroll">
+            <span className="text-md font-bold uppercase tracking-[0.5em] text-accent mb-4 block">
+              OUR ARSENAL
+            </span>
+            <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-6">
+              Tools & Technologies
+            </h2>
+            <p className="text-xl text-[#A0A0A0] max-w-2xl mx-auto">
+              We leverage industry-leading tools and technologies to build
+              exceptional digital products.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredStack.map((stack, idx) => {
+              const hiddenClass = idx >= 3 ? "hidden md:block" : "";
+              const { Icon } = stack;
+              return (
+                <div
+                  key={idx}
+                  className={`p-8 rounded-xl border border-gray-700 bg-[#141414] glow-hover text-left flex flex-col h-full ${hiddenClass} reveal-on-scroll`}
+                  style={{ transitionDelay: `${(idx % 3) * 50}ms` }}
+                >
+                  <Icon className="w-10 h-10 text-accent mb-4" />
+                  <h3 className="text-2xl font-semibold text-white mb-3">
+                    {stack.category}
+                  </h3>
+                  <div className="flex flex-wrap gap-3 mt-auto">
+                    {stack.tools.map((tool, toolIdx) => {
+                      const mapping = TAG_MAPPING[tool];
+                      const Icon = mapping?.icon || DefaultIcon;
+                      const color = mapping?.color || "#9CA3AF";
+                      return (
+                        <span
+                          key={toolIdx}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/5 text-gray-300 border border-accent/10 text-sm hover:border-accent/40 hover:bg-accent/10 transition-all duration-300"
+                        >
+                          <Icon style={{ color }} className="w-4 h-4" />
+                          {tool}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-12 text-center reveal-on-scroll">
+            <Link
+              href="/services#tools"
+              className="px-8 py-4 rounded-xl border border-gray-700 text-white font-semibold text-lg hover:border-accent glow-hover inline-flex items-center gap-2 group transition-all duration-300"
+            >
+              View All Tools
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   const WhatsAppContact: React.FC = () => {
     const phoneNumber = "+92-3416429260";
@@ -521,10 +564,10 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
 
   const ContactSection: React.FC = () => {
     return (
-      <section id="contact" className="py-24 bg-[#1A1A1A]">
+      <section id="contact" className="py-24  bg-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#141414] p-8 md:p-12 rounded-2xl reveal-on-scroll border border-gray-800 flex flex-col items-center text-center">
-            <span className="text-sm font-semibold uppercase tracking-widest text-accent mb-2 block">
+            <span className="text-md font-bold uppercase tracking-widest text-accent mb-2 block">
               Initiate Connection
             </span>
             <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
@@ -567,9 +610,9 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
           <div className="flex flex-col">
             <a
               href="#home"
-              className="flex items-center space-x-2 text-2xl font-black tracking-widest text-accent mb-2"
+              className="flex items-center space-x-2 text-2xl font-black tracking-widest text-white mb-2"
             >
-              Husak
+              HUSAK<span className="text-accent">.</span>
             </a>
             <p className="text-sm text-[#A0A0A0]">
               &copy; 2024 Husak Solutions. All Rights Reserved.
@@ -599,68 +642,18 @@ const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A;
-            color: #F0F0F0;
-            scroll-behavior: smooth;
-        }
-
-        .text-accent { color: ${ACCENT_GREEN} !important; }
-        .bg-accent { background-color: ${ACCENT_GREEN} !important; }
-        .border-accent { border-color: ${ACCENT_GREEN} !important; }
-        .hover-text-accent:hover { color: ${ACCENT_GREEN} !important; }
-        .hover-border-accent:hover { border-color: ${ACCENT_GREEN} !important; }
-
-        .hero-tech-bg {
-            background: linear-gradient(135deg, #0A0A0A 0%, #0d1209 50%, #0A0A0A 100%);
-            position: relative;
-        }
-
-        .hero-tech-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-              radial-gradient(circle at 20% 30%, rgba(57, 255, 20, 0.03) 0%, transparent 50%),
-              radial-gradient(circle at 80% 70%, rgba(57, 255, 20, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .reveal-on-scroll.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .glow-hover {
-            transition: all 0.3s ease-out;
-            box-shadow: 0 0 0px #0A0A0A;
-            border: 1px solid transparent;
-        }
-        .glow-hover:hover {
-            box-shadow: 0 0 15px rgba(${ACCENT_GREEN_RGB}, 0.4), 0 0 5px rgba(${ACCENT_GREEN_RGB}, 0.2);
-            transform: translateY(-2px);
-            border-color: ${ACCENT_GREEN};
-        }
-      `}</style>
-          <Header />
-          <WhatsAppContact />
-          <main>
-            <HomeSection />
-            <PortfolioSection />
-            <ServicesSection />
-            <ContactSection />
-          </main>
-          <Footer />
-        </>
+      <style>{accentStyles}</style>
+      <Header />
+      <WhatsAppContact />
+      <main>
+        <HomeSection />
+        <PortfolioSection />
+        <ServicesSection />
+        <TechStackSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
   );
 };
 

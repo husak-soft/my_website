@@ -28,7 +28,7 @@ export const projects: Project[] = [
     title: 'Sleet',
     description: 'A logistics management platform with a specialized real-time tracking engine and predictive analytics for the complex supply chain landscape.',
     image: '/images/sleet.png',
-    tags: ['Nestjs','AWS','MapBox'],
+    tags: ['NestJs','AWS','MapBox'],
     link: 'https://sleet.sa/'
   },
   {
@@ -60,7 +60,7 @@ export const projects: Project[] = [
     title: 'Contractor Assist',
     description: 'A contract management platform designed to simplify and secure agreements between freelancers and clients.',
     image: '/images/gigle.png',
-    tags: ['Firebase','AWS','Stripe','Nodejs','Firebase CAPI'],
+    tags: ['Firebase','AWS','Stripe','NodeJs','Firebase CAPI'],
     link: 'https://staging-contractor-assist.web.app/'
   }
 ];
