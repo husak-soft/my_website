@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { IntroOverlay } from "./IntroOverlay"; // Ensure path is correct
+import { IntroOverlay } from "./IntroOverlay";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -21,11 +21,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	const [hasEntered, setHasEntered] = useState(false);
+	const [isMounting, setIsMounting] = useState(true);
 
-	/**
-	 * MOBILE FIX: This function is triggered by the button in IntroOverlay.
-	 * It looks for a function we will define in the Header component.
-	 */
+	useEffect(() => {
+		// Check if user already entered this session to avoid showing loader on every route change
+		const sessionEntered = sessionStorage.getItem("husak_entered");
+		if (sessionEntered === "true") {
+			setHasEntered(true);
+		}
+		setIsMounting(false);
+	}, []);
+
 	const handleMusicTrigger = () => {
 		if (typeof window !== "undefined" && (window as any).startHusakMusic) {
 			(window as any).startHusakMusic();
@@ -33,28 +39,24 @@ export default function RootLayout({
 	};
 
 	const handleEnter = () => {
+		sessionStorage.setItem("husak_entered", "true");
 		setHasEntered(true);
 	};
 
 	return (
 		<html lang="en" className="scroll-smooth">
-			<head>
-				<link rel="shortcut icon" href="/globe.svg" />
-			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0A0A0A] text-white`}
 			>
-				{/* 1. Preloader/Overlay Layer */}
-				{!hasEntered && (
+				{/* The Overlay - Only shows if hasEntered is false */}
+				{!isMounting && !hasEntered && (
 					<IntroOverlay
 						onEnter={handleEnter}
 						onStartMusic={handleMusicTrigger}
 					/>
 				)}
 
-				{/* 2. Main Website Content Layer */}
-				{/* We keep this in the DOM but hidden/faded until entry to ensure 
-            the Header is ready to receive the music trigger. */}
+				{/* The Main Content - Always wrapped in body tags */}
 				<div
 					className={`transition-opacity duration-1000 ease-in-out ${
 						hasEntered ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -63,8 +65,11 @@ export default function RootLayout({
 					{children}
 				</div>
 
-				{/* 3. External Scripts */}
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+				{/* GSAP Script */}
+				<script
+					src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+					defer
+				></script>
 			</body>
 		</html>
 	);
