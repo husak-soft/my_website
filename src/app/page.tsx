@@ -76,25 +76,66 @@ const App: React.FC = () => {
 	// Scroll Reveal
 	useEffect(() => ScrollReveal(), []);
 
-	// Header
 	// const Header: React.FC = () => {
 	// 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	// 	const [isPlaying, setIsPlaying] = useState(true);
+
+	// 	// This ref connects to the <audio> tag below
+	// 	const audioRef = useRef<HTMLAudioElement | null>(null);
+
 	// 	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+	// 	useEffect(() => {
+	// 		// We create a global "trigger" that the Overlay can call
+	// 		// This bypasses unmounting issues
+	// 		(window as any).startHusakMusic = () => {
+	// 			if (audioRef.current) {
+	// 				audioRef.current
+	// 					.play()
+	// 					.then(() => setIsPlaying(true))
+	// 					.catch((err) => console.log("Audio failed:", err));
+	// 			}
+	// 		};
+	// 	}, []);
+
+	// 	useEffect(() => {
+	// 		// Since the user clicked "Enter" in the Layout,
+	// 		// the browser now allows us to play audio here.
+	// 		if (audioRef.current) {
+	// 			audioRef.current
+	// 				.play()
+	// 				.then(() => setIsPlaying(true))
+	// 				.catch(() => console.log("Waiting for user interaction"));
+	// 		}
+	// 	}, []);
+
+	// 	const toggleMusic = () => {
+	// 		if (audioRef.current) {
+	// 			if (isPlaying) {
+	// 				audioRef.current.pause();
+	// 				setIsPlaying(false);
+	// 			} else {
+	// 				// We use the exact path you confirmed: /music/tick-of-the-clock.mp3
+	// 				audioRef.current
+	// 					.play()
+	// 					.then(() => setIsPlaying(true))
+	// 					.catch((err) => {
+	// 						console.log("User interaction required to play audio.");
+	// 					});
+	// 			}
+	// 		}
+	// 	};
 
 	// 	const NavLinks: React.FC<{ isMobile?: boolean }> = ({
 	// 		isMobile = false,
 	// 	}) => {
 	// 		const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-	// 			if (isMobile && toggleMenu) {
-	// 				toggleMenu();
-	// 			}
+	// 			if (isMobile) toggleMenu();
 	// 			const href = e.currentTarget.getAttribute("href");
 	// 			if (href && href.startsWith("#")) {
 	// 				e.preventDefault();
 	// 				const element = document.querySelector(href);
-	// 				if (element) {
-	// 					element.scrollIntoView({ behavior: "smooth" });
-	// 				}
+	// 				if (element) element.scrollIntoView({ behavior: "smooth" });
 	// 			}
 	// 		};
 
@@ -102,128 +143,186 @@ const App: React.FC = () => {
 	// 			<nav
 	// 				className={
 	// 					isMobile
-	// 						? "flex flex-col space-y-4 pt-4 pb-8"
+	// 						? "flex flex-col space-y-4 pt-4 pb-4"
 	// 						: "space-x-8 text-lg font-medium"
 	// 				}
 	// 			>
-	// 				{["Home", "Portfolio", "Services", "Tools", "Contact"].map((item) => {
-	// 					const href = `#${item.toLowerCase()}`;
-	// 					return (
-	// 						<a
-	// 							key={item}
-	// 							href={href}
-	// 							className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
-	// 							onClick={handleClick}
-	// 						>
-	// 							{item}
-	// 							<span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out group-hover:transition-all group-hover:duration-300 group-hover:ease-out"></span>
-	// 						</a>
-	// 					);
-	// 				})}
+	// 				{["Home", "Portfolio", "Services", "Tools", "Contact"].map((item) => (
+	// 					<a
+	// 						key={item}
+	// 						href={`#${item.toLowerCase()}`}
+	// 						className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
+	// 						onClick={handleClick}
+	// 					>
+	// 						{item}
+	// 						<span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out"></span>
+	// 					</a>
+	// 				))}
 	// 			</nav>
 	// 		);
 	// 	};
 
+	// 	// const MusicToggle = () => (
+	// 	// 	<button
+	// 	// 		onClick={toggleMusic}
+	// 	// 		className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
+	// 	// 	>
+	// 	// 		<div className="relative flex h-2 w-2">
+	// 	// 			{isPlaying && (
+	// 	// 				<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+	// 	// 			)}
+	// 	// 			<span
+	// 	// 				className={`relative inline-flex rounded-full h-2 w-2 ${
+	// 	// 					isPlaying ? "bg-green-500" : "bg-gray-600"
+	// 	// 				}`}
+	// 	// 			></span>
+	// 	// 		</div>
+	// 	// 		<span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
+	// 	// 			{isPlaying ? "Mute" : "Music"}
+	// 	// 		</span>
+	// 	// 	</button>
+	// 	// );
+
+	// 	// The Music Button UI with Icons
+	// 	const MusicToggle = () => (
+	// 		<button
+	// 			onClick={toggleMusic}
+	// 			className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
+	// 			aria-label={isPlaying ? "Mute music" : "Play music"}
+	// 		>
+	// 			<div className="relative flex h-4 w-4 items-center justify-center">
+	// 				{isPlaying ? (
+	// 					// Mute Icon (Visible when playing)
+	// 					<svg
+	// 						xmlns="http://www.w3.org/2000/svg"
+	// 						viewBox="0 0 24 24"
+	// 						fill="none"
+	// 						stroke="currentColor"
+	// 						strokeWidth="2"
+	// 						strokeLinecap="round"
+	// 						strokeLinejoin="round"
+	// 						className="w-4 h-4 text-green-500 animate-pulse"
+	// 					>
+	// 						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+	// 						<path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+	// 					</svg>
+	// 				) : (
+	// 					// Play/Muted Icon (Visible when paused)
+	// 					<svg
+	// 						xmlns="http://www.w3.org/2000/svg"
+	// 						viewBox="0 0 24 24"
+	// 						fill="none"
+	// 						stroke="currentColor"
+	// 						strokeWidth="2"
+	// 						strokeLinecap="round"
+	// 						strokeLinejoin="round"
+	// 						className="w-4 h-4 text-[#A0A0A0] group-hover:text-white"
+	// 					>
+	// 						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+	// 						<line x1="23" y1="9" x2="17" y2="15"></line>
+	// 						<line x1="17" y1="9" x2="23" y2="15"></line>
+	// 					</svg>
+	// 				)}
+	// 			</div>
+
+	// 			{/* <span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
+	// 				{isPlaying ? "Mute" : "Music"}
+	// 			</span> */}
+	// 		</button>
+	// 	);
+
 	// 	return (
 	// 		<header className="sticky top-0 z-50 bg-[#0A0A0A] bg-opacity-95 backdrop-blur-sm border-b border-[#1A1A1A]">
+	// 			{/* FIXED: Pointing to the correct subfolder path */}
+	// 			<audio
+	// 				ref={audioRef}
+	// 				src="/music/tick-of-the-clock.mp3"
+	// 				loop
+	// 				preload="auto"
+	// 				playsInline
+	// 			/>
+
 	// 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-2 flex justify-between items-center relative">
 	// 				<a
 	// 					href="#home"
 	// 					className="flex items-center space-x-2 text-2xl font-black tracking-widest text-white"
 	// 				>
-	// 					HUSAK<span className="text-accent">.</span>
+	// 					HUSAK<span className="text-green-500">.</span>
 	// 				</a>
-	// 				<div className="flex items-center space-x-4">
+
+	// 				<div className="flex items-center space-x-6">
 	// 					<div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
 	// 						<NavLinks />
 	// 					</div>
-	// 					<div className="hidden md:flex flex-col items-end bg-accent/10 px-4 py-2 rounded-lg">
-	// 						<span className="text-green-500 font-semibold flex items-center space-x-2">
-	// 							<svg
-	// 								xmlns="http://www.w3.org/2000/svg"
-	// 								className="h-5 w-5"
-	// 								fill="none"
-	// 								viewBox="0 0 24 24"
-	// 								stroke="currentColor"
-	// 								strokeWidth={2}
-	// 							>
-	// 								<path
-	// 									strokeLinecap="round"
-	// 									strokeLinejoin="round"
-	// 									d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.494a1 1 0 01-.212 1.04l-2.257 2.257a16.043 16.043 0 006.586 6.586l2.257-2.257a1 1 0 011.04-.212l4.494 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z"
-	// 								/>
-	// 							</svg>
-	// 							<span>Any Question?</span>
-	// 						</span>
-	// 						<span className="text-white font-bold text-lg mt-1">
-	// 							+92-3265773718
-	// 						</span>
-	// 					</div>
 
-	// 					<button
-	// 						className="md:hidden p-2 rounded-lg border border-gray-700 text-white hover-border-accent transition duration-300 z-50 ml-4"
-	// 						onClick={toggleMenu}
-	// 					>
-	// 						{isMenuOpen ? (
-	// 							<svg
-	// 								className="w-6 h-6"
-	// 								fill="none"
-	// 								stroke="currentColor"
-	// 								viewBox="0 0 24 24"
-	// 							>
-	// 								<path
-	// 									strokeLinecap="round"
-	// 									strokeLinejoin="round"
-	// 									strokeWidth="2"
-	// 									d="M6 18L18 6M6 6l12 12"
-	// 								></path>
-	// 							</svg>
-	// 						) : (
-	// 							<svg
-	// 								className="w-6 h-6"
-	// 								fill="none"
-	// 								stroke="currentColor"
-	// 								viewBox="0 0 24 24"
-	// 							>
-	// 								<path
-	// 									strokeLinecap="round"
-	// 									strokeLinejoin="round"
-	// 									strokeWidth="2"
-	// 									d="M4 6h16M4 12h16M4 18h16"
-	// 								></path>
-	// 							</svg>
-	// 						)}
-	// 					</button>
+	// 					<div className="flex items-center space-x-4">
+	// 						{/* Desktop Music Button */}
+	// 						<div className="">
+	// 							<MusicToggle />
+	// 						</div>
+
+	// 						<div className="hidden md:flex flex-col items-end bg-green-500/5 px-4 py-2 rounded-lg border border-green-500/10">
+	// 							<span className="text-green-500 font-semibold flex items-center space-x-2 text-sm">
+	// 								<svg
+	// 									xmlns="http://www.w3.org/2000/svg"
+	// 									className="h-4 w-4"
+	// 									fill="none"
+	// 									viewBox="0 0 24 24"
+	// 									stroke="currentColor"
+	// 									strokeWidth={2}
+	// 								>
+	// 									<path
+	// 										strokeLinecap="round"
+	// 										strokeLinejoin="round"
+	// 										d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.494a1 1 0 01-.212 1.04l-2.257 2.257a16.043 16.043 0 006.586 6.586l2.257-2.257a1 1 0 011.04-.212l4.494 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z"
+	// 									/>
+	// 								</svg>
+	// 								<span>Any Question?</span>
+	// 							</span>
+	// 							<span className="text-white font-bold text-md mt-0.5">
+	// 								+92-3265773718
+	// 							</span>
+	// 						</div>
+
+	// 						<button
+	// 							className="md:hidden p-2 rounded-lg border border-gray-700 text-white z-50 ml-2"
+	// 							onClick={toggleMenu}
+	// 						>
+	// 							{isMenuOpen ? "✕" : "☰"}
+	// 						</button>
+	// 					</div>
 	// 				</div>
 	// 			</div>
+
+	// 			{/* Mobile Menu */}
 	// 			<div
 	// 				className={`md:hidden absolute w-full transition-all duration-300 ease-in-out overflow-hidden ${
 	// 					isMenuOpen
-	// 						? "max-h-screen border-t border-[#1A1A1A] bg-[#0A0A0A] bg-opacity-95 backdrop-blur-md"
+	// 						? "max-h-screen border-t border-[#1A1A1A] bg-[#0A0A0A]"
 	// 						: "max-h-0"
 	// 				}`}
 	// 				style={{ top: "100%" }}
 	// 			>
-	// 				<div className="px-4 pt-4 sm:px-6">
+	// 				<div className="px-4 pt-4 pb-8 flex flex-col items-center">
 	// 					<NavLinks isMobile={true} />
+	// 					<div className="mt-4 pt-4 border-t border-[#1A1A1A] w-full flex justify-center">
+	// 						<MusicToggle />
+	// 					</div>
 	// 				</div>
 	// 			</div>
 	// 		</header>
 	// 	);
 	// };
 
+	// Home Section
 	const Header: React.FC = () => {
 		const [isMenuOpen, setIsMenuOpen] = useState(false);
 		const [isPlaying, setIsPlaying] = useState(true);
-
-		// This ref connects to the <audio> tag below
 		const audioRef = useRef<HTMLAudioElement | null>(null);
 
 		const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
 		useEffect(() => {
-			// We create a global "trigger" that the Overlay can call
-			// This bypasses unmounting issues
 			(window as any).startHusakMusic = () => {
 				if (audioRef.current) {
 					audioRef.current
@@ -234,30 +333,16 @@ const App: React.FC = () => {
 			};
 		}, []);
 
-		useEffect(() => {
-			// Since the user clicked "Enter" in the Layout,
-			// the browser now allows us to play audio here.
-			if (audioRef.current) {
-				audioRef.current
-					.play()
-					.then(() => setIsPlaying(true))
-					.catch(() => console.log("Waiting for user interaction"));
-			}
-		}, []);
-
 		const toggleMusic = () => {
 			if (audioRef.current) {
 				if (isPlaying) {
 					audioRef.current.pause();
 					setIsPlaying(false);
 				} else {
-					// We use the exact path you confirmed: /music/tick-of-the-clock.mp3
 					audioRef.current
 						.play()
 						.then(() => setIsPlaying(true))
-						.catch((err) => {
-							console.log("User interaction required to play audio.");
-						});
+						.catch(() => console.log("User interaction required"));
 				}
 			}
 		};
@@ -279,80 +364,52 @@ const App: React.FC = () => {
 				<nav
 					className={
 						isMobile
-							? "flex flex-col space-y-4 pt-4 pb-4"
-							: "space-x-8 text-lg font-medium"
+							? "flex flex-col space-y-6 text-center"
+							: "space-x-10 text-sm font-bold uppercase tracking-widest"
 					}
 				>
 					{["Home", "Portfolio", "Services", "Tools", "Contact"].map((item) => (
 						<a
 							key={item}
 							href={`#${item.toLowerCase()}`}
-							className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
+							className="group relative text-white/70 hover:text-green-500 transition-colors duration-300"
 							onClick={handleClick}
 						>
 							{item}
-							<span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out"></span>
+							<span className="absolute -bottom-1 left-0 h-[1px] bg-green-500 w-0 group-hover:w-full transition-all duration-300"></span>
 						</a>
 					))}
 				</nav>
 			);
 		};
 
-		// const MusicToggle = () => (
-		// 	<button
-		// 		onClick={toggleMusic}
-		// 		className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
-		// 	>
-		// 		<div className="relative flex h-2 w-2">
-		// 			{isPlaying && (
-		// 				<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-		// 			)}
-		// 			<span
-		// 				className={`relative inline-flex rounded-full h-2 w-2 ${
-		// 					isPlaying ? "bg-green-500" : "bg-gray-600"
-		// 				}`}
-		// 			></span>
-		// 		</div>
-		// 		<span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
-		// 			{isPlaying ? "Mute" : "Music"}
-		// 		</span>
-		// 	</button>
-		// );
-
-		// The Music Button UI with Icons
 		const MusicToggle = () => (
 			<button
 				onClick={toggleMusic}
-				className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
+				className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-green-500/50 transition-all duration-300 group backdrop-blur-md"
 				aria-label={isPlaying ? "Mute music" : "Play music"}
 			>
-				<div className="relative flex h-4 w-4 items-center justify-center">
+				<div className="relative flex items-center justify-center">
 					{isPlaying ? (
-						// Mute Icon (Visible when playing)
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
 							className="w-4 h-4 text-green-500 animate-pulse"
 						>
 							<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
 							<path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
 						</svg>
 					) : (
-						// Play/Muted Icon (Visible when paused)
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="w-4 h-4 text-[#A0A0A0] group-hover:text-white"
+							className="w-4 h-4 text-white/40"
 						>
 							<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
 							<line x1="23" y1="9" x2="17" y2="15"></line>
@@ -360,16 +417,14 @@ const App: React.FC = () => {
 						</svg>
 					)}
 				</div>
-
-				{/* <span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
-					{isPlaying ? "Mute" : "Music"}
-				</span> */}
 			</button>
 		);
 
 		return (
-			<header className="sticky top-0 z-50 bg-[#0A0A0A] bg-opacity-95 backdrop-blur-sm border-b border-[#1A1A1A]">
-				{/* FIXED: Pointing to the correct subfolder path */}
+			<header className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300">
+				{/* Glassmorphism Container */}
+				<div className="absolute inset-0 bg-[#0A0A0A]/40 backdrop-blur-md pointer-events-none border-b border-white/5" />
+
 				<audio
 					ref={audioRef}
 					src="/music/tick-of-the-clock.mp3"
@@ -378,71 +433,78 @@ const App: React.FC = () => {
 					playsInline
 				/>
 
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-2 flex justify-between items-center relative">
+				<div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative z-10">
+					{/* Logo */}
 					<a
 						href="#home"
-						className="flex items-center space-x-2 text-2xl font-black tracking-widest text-white"
+						className="text-2xl font-black tracking-tighter text-white"
 					>
 						HUSAK<span className="text-green-500">.</span>
 					</a>
 
-					<div className="flex items-center space-x-6">
-						<div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
-							<NavLinks />
-						</div>
+					{/* Desktop Nav */}
+					<div className="hidden md:block">
+						<NavLinks />
+					</div>
 
-						<div className="flex items-center space-x-4">
-							{/* Desktop Music Button */}
-							<div className="">
-								<MusicToggle />
+					{/* Right Side Actions */}
+					<div className="flex items-center space-x-4">
+						<MusicToggle />
+
+						{/* Contact Pill */}
+						{/* <div className="hidden lg:flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-lg">
+							<div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+							<span className="text-xs font-bold text-white/90 tracking-wider">
+								+92-3265773718
+							</span>
+						</div> */}
+
+						<div className="hidden lg:flex items-center space-x-4 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full backdrop-blur-lg hover:border-green-500/30 transition-colors duration-300 group/pill">
+							{/* Status Indicator */}
+							<div className="relative flex items-center justify-center">
+								<div className="absolute w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75" />
+								<div className="relative w-2 h-2 bg-green-500 rounded-full" />
 							</div>
 
-							<div className="hidden md:flex flex-col items-end bg-green-500/5 px-4 py-2 rounded-lg border border-green-500/10">
-								<span className="text-green-500 font-semibold flex items-center space-x-2 text-sm">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										className="h-4 w-4"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										strokeWidth={2}
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.494a1 1 0 01-.212 1.04l-2.257 2.257a16.043 16.043 0 006.586 6.586l2.257-2.257a1 1 0 011.04-.212l4.494 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z"
-										/>
-									</svg>
-									<span>Any Question?</span>
+							<div className="flex flex-col leading-tight">
+								<span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">
+									Any Questions?
 								</span>
-								<span className="text-white font-bold text-md mt-0.5">
+								<a
+									href="tel:+923265773718"
+									className="text-xs font-bold text-white/90 tracking-wider group-hover/pill:text-green-500 transition-colors"
+								>
 									+92-3265773718
-								</span>
+								</a>
 							</div>
-
-							<button
-								className="md:hidden p-2 rounded-lg border border-gray-700 text-white z-50 ml-2"
-								onClick={toggleMenu}
-							>
-								{isMenuOpen ? "✕" : "☰"}
-							</button>
 						</div>
+
+						{/* Mobile Menu Toggle */}
+						<button className="md:hidden text-white p-2" onClick={toggleMenu}>
+							{isMenuOpen ? (
+								<span className="text-2xl font-light">✕</span>
+							) : (
+								<div className="space-y-1.5">
+									<div className="w-6 h-0.5 bg-white"></div>
+									<div className="w-4 h-0.5 bg-green-500 ml-auto"></div>
+								</div>
+							)}
+						</button>
 					</div>
 				</div>
 
-				{/* Mobile Menu */}
+				{/* Mobile Menu Overlay */}
 				<div
-					className={`md:hidden absolute w-full transition-all duration-300 ease-in-out overflow-hidden ${
-						isMenuOpen
-							? "max-h-screen border-t border-[#1A1A1A] bg-[#0A0A0A]"
-							: "max-h-0"
+					className={`md:hidden absolute w-full bg-[#0A0A0A]/95 backdrop-blur-2xl transition-all duration-500 ease-in-out border-b border-white/10 overflow-hidden ${
+						isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
 					}`}
-					style={{ top: "100%" }}
 				>
-					<div className="px-4 pt-4 pb-8 flex flex-col items-center">
+					<div className="p-12 flex flex-col items-center">
 						<NavLinks isMobile={true} />
-						<div className="mt-4 pt-4 border-t border-[#1A1A1A] w-full flex justify-center">
-							<MusicToggle />
+						<div className="mt-10 pt-8 border-t border-white/5 w-full flex justify-center">
+							<span className="text-white/40 text-xs tracking-[0.3em] uppercase">
+								Connect With Me
+							</span>
 						</div>
 					</div>
 				</div>
@@ -450,7 +512,6 @@ const App: React.FC = () => {
 		);
 	};
 
-	// Home Section
 	const HomeSection: React.FC = () => {
 		useEffect(() => {
 			const canvas = document.getElementById(

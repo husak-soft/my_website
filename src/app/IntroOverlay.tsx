@@ -51,7 +51,7 @@ export const IntroOverlay = ({
 	return (
 		<div
 			ref={overlayRef}
-			className="fixed inset-0 z-[9999] bg-[#0A0A0A] flex items-center justify-center"
+			className="fixed inset-0 z-9999 bg-[#0A0A0A] flex items-center justify-center"
 		>
 			<div className="text-center">
 				<h1 className="text-7xl font-black text-white tracking-tighter mb-8">
