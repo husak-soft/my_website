@@ -454,7 +454,7 @@ const App: React.FC = () => {
 	const HomeSection: React.FC = () => {
 		useEffect(() => {
 			const canvas = document.getElementById(
-				"tech-stars-canvas"
+				"tech-stars-canvas",
 			) as HTMLCanvasElement;
 			if (!canvas) return;
 
@@ -615,11 +615,11 @@ const App: React.FC = () => {
 										</div>
 									</div>
 									{/* Project Info */}
-									<div className="p-6 flex flex-col flex-grow">
+									<div className="p-6 flex flex-col grow">
 										<h3 className="text-2xl font-bold mb-3 text-white">
 											{project.title}
 										</h3>
-										<p className="text-[#A0A0A0] mb-4 text-sm leading-relaxed flex-grow">
+										<p className="text-[#A0A0A0] mb-4 text-sm leading-relaxed grow">
 											{project.description}
 										</p>
 										<div className="mt-auto">
@@ -781,7 +781,7 @@ const App: React.FC = () => {
 	const WhatsAppContact: React.FC = () => {
 		const phoneNumber = "+923265773718";
 		const message = encodeURIComponent(
-			"Hello! I'm interested in working with the architects."
+			"Hello! I'm interested in working with the architects.",
 		);
 
 		return (
@@ -821,8 +821,8 @@ const App: React.FC = () => {
 						<div className="space-y-4 w-full max-w-md">
 							<div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
 								<div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-									<Mail className="w-5 h-5 text-accent flex-shrink-0" />
-									<span className="text-[#A0A0A0] break-all sm:break-words text-center sm:text-left">
+									<Mail className="w-5 h-5 text-accent shrink-0" />
+									<span className="text-[#A0A0A0] break-all sm:wrap-break-words text-center sm:text-left">
 										husak.softdev@gmail.com
 									</span>
 								</div>
@@ -830,7 +830,7 @@ const App: React.FC = () => {
 
 							<div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-white">
 								<div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
-									<Phone className="w-5 h-5 text-accent flex-shrink-0" />
+									<Phone className="w-5 h-5 text-accent shrink-0" />
 									<span className="text-[#A0A0A0] text-center sm:text-left">
 										+92-3265773718
 									</span>
