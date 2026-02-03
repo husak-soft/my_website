@@ -10,7 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, ArrowRight, ExternalLink } from "lucide-react";
 import BackgroundMusic from "./music";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
+import { reviews, Review } from "@/data/reviews";
 import { projects } from "../data/projects";
 import { featuredServices } from "@/data/services";
 import { TAG_MAPPING, DefaultIcon } from "../data/techStackIcons";
@@ -50,11 +52,11 @@ const Phone = ({ className = "w-6 h-6" }: { className?: string }) => (
 	</svg>
 );
 
-const Star = ({ className = "w-6 h-6" }: { className?: string }) => (
-	<svg className={className} fill="currentColor" viewBox="0 0 24 24">
-		<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-	</svg>
-);
+// const Star = ({ className = "w-6 h-6" }: { className?: string }) => (
+// 	<svg className={className} fill="currentColor" viewBox="0 0 24 24">
+// 		<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+// 	</svg>
+// )
 
 const Home = ({ className = "w-6 h-6" }: { className?: string }) => (
 	<svg
@@ -76,245 +78,6 @@ const App: React.FC = () => {
 	// Scroll Reveal
 	useEffect(() => ScrollReveal(), []);
 
-	// const Header: React.FC = () => {
-	// 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	// 	const [isPlaying, setIsPlaying] = useState(true);
-
-	// 	// This ref connects to the <audio> tag below
-	// 	const audioRef = useRef<HTMLAudioElement | null>(null);
-
-	// 	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-	// 	useEffect(() => {
-	// 		// We create a global "trigger" that the Overlay can call
-	// 		// This bypasses unmounting issues
-	// 		(window as any).startHusakMusic = () => {
-	// 			if (audioRef.current) {
-	// 				audioRef.current
-	// 					.play()
-	// 					.then(() => setIsPlaying(true))
-	// 					.catch((err) => console.log("Audio failed:", err));
-	// 			}
-	// 		};
-	// 	}, []);
-
-	// 	useEffect(() => {
-	// 		// Since the user clicked "Enter" in the Layout,
-	// 		// the browser now allows us to play audio here.
-	// 		if (audioRef.current) {
-	// 			audioRef.current
-	// 				.play()
-	// 				.then(() => setIsPlaying(true))
-	// 				.catch(() => console.log("Waiting for user interaction"));
-	// 		}
-	// 	}, []);
-
-	// 	const toggleMusic = () => {
-	// 		if (audioRef.current) {
-	// 			if (isPlaying) {
-	// 				audioRef.current.pause();
-	// 				setIsPlaying(false);
-	// 			} else {
-	// 				// We use the exact path you confirmed: /music/tick-of-the-clock.mp3
-	// 				audioRef.current
-	// 					.play()
-	// 					.then(() => setIsPlaying(true))
-	// 					.catch((err) => {
-	// 						console.log("User interaction required to play audio.");
-	// 					});
-	// 			}
-	// 		}
-	// 	};
-
-	// 	const NavLinks: React.FC<{ isMobile?: boolean }> = ({
-	// 		isMobile = false,
-	// 	}) => {
-	// 		const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-	// 			if (isMobile) toggleMenu();
-	// 			const href = e.currentTarget.getAttribute("href");
-	// 			if (href && href.startsWith("#")) {
-	// 				e.preventDefault();
-	// 				const element = document.querySelector(href);
-	// 				if (element) element.scrollIntoView({ behavior: "smooth" });
-	// 			}
-	// 		};
-
-	// 		return (
-	// 			<nav
-	// 				className={
-	// 					isMobile
-	// 						? "flex flex-col space-y-4 pt-4 pb-4"
-	// 						: "space-x-8 text-lg font-medium"
-	// 				}
-	// 			>
-	// 				{["Home", "Portfolio", "Services", "Tools", "Contact"].map((item) => (
-	// 					<a
-	// 						key={item}
-	// 						href={`#${item.toLowerCase()}`}
-	// 						className="group relative text-white hover:text-green-500 transition-colors duration-300 inline-block"
-	// 						onClick={handleClick}
-	// 					>
-	// 						{item}
-	// 						<span className="absolute left-0 bottom-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-300 ease-out"></span>
-	// 					</a>
-	// 				))}
-	// 			</nav>
-	// 		);
-	// 	};
-
-	// 	// const MusicToggle = () => (
-	// 	// 	<button
-	// 	// 		onClick={toggleMusic}
-	// 	// 		className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
-	// 	// 	>
-	// 	// 		<div className="relative flex h-2 w-2">
-	// 	// 			{isPlaying && (
-	// 	// 				<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-	// 	// 			)}
-	// 	// 			<span
-	// 	// 				className={`relative inline-flex rounded-full h-2 w-2 ${
-	// 	// 					isPlaying ? "bg-green-500" : "bg-gray-600"
-	// 	// 				}`}
-	// 	// 			></span>
-	// 	// 		</div>
-	// 	// 		<span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
-	// 	// 			{isPlaying ? "Mute" : "Music"}
-	// 	// 		</span>
-	// 	// 	</button>
-	// 	// );
-
-	// 	// The Music Button UI with Icons
-	// 	const MusicToggle = () => (
-	// 		<button
-	// 			onClick={toggleMusic}
-	// 			className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1A1A1A] hover:border-green-500 transition-all duration-300 group bg-[#141414]"
-	// 			aria-label={isPlaying ? "Mute music" : "Play music"}
-	// 		>
-	// 			<div className="relative flex h-4 w-4 items-center justify-center">
-	// 				{isPlaying ? (
-	// 					// Mute Icon (Visible when playing)
-	// 					<svg
-	// 						xmlns="http://www.w3.org/2000/svg"
-	// 						viewBox="0 0 24 24"
-	// 						fill="none"
-	// 						stroke="currentColor"
-	// 						strokeWidth="2"
-	// 						strokeLinecap="round"
-	// 						strokeLinejoin="round"
-	// 						className="w-4 h-4 text-green-500 animate-pulse"
-	// 					>
-	// 						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-	// 						<path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-	// 					</svg>
-	// 				) : (
-	// 					// Play/Muted Icon (Visible when paused)
-	// 					<svg
-	// 						xmlns="http://www.w3.org/2000/svg"
-	// 						viewBox="0 0 24 24"
-	// 						fill="none"
-	// 						stroke="currentColor"
-	// 						strokeWidth="2"
-	// 						strokeLinecap="round"
-	// 						strokeLinejoin="round"
-	// 						className="w-4 h-4 text-[#A0A0A0] group-hover:text-white"
-	// 					>
-	// 						<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-	// 						<line x1="23" y1="9" x2="17" y2="15"></line>
-	// 						<line x1="17" y1="9" x2="23" y2="15"></line>
-	// 					</svg>
-	// 				)}
-	// 			</div>
-
-	// 			{/* <span className="text-xs font-bold tracking-widest uppercase text-[#A0A0A0] group-hover:text-white">
-	// 				{isPlaying ? "Mute" : "Music"}
-	// 			</span> */}
-	// 		</button>
-	// 	);
-
-	// 	return (
-	// 		<header className="sticky top-0 z-50 bg-[#0A0A0A] bg-opacity-95 backdrop-blur-sm border-b border-[#1A1A1A]">
-	// 			{/* FIXED: Pointing to the correct subfolder path */}
-	// 			<audio
-	// 				ref={audioRef}
-	// 				src="/music/tick-of-the-clock.mp3"
-	// 				loop
-	// 				preload="auto"
-	// 				playsInline
-	// 			/>
-
-	// 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-2 flex justify-between items-center relative">
-	// 				<a
-	// 					href="#home"
-	// 					className="flex items-center space-x-2 text-2xl font-black tracking-widest text-white"
-	// 				>
-	// 					HUSAK<span className="text-green-500">.</span>
-	// 				</a>
-
-	// 				<div className="flex items-center space-x-6">
-	// 					<div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
-	// 						<NavLinks />
-	// 					</div>
-
-	// 					<div className="flex items-center space-x-4">
-	// 						{/* Desktop Music Button */}
-	// 						<div className="">
-	// 							<MusicToggle />
-	// 						</div>
-
-	// 						<div className="hidden md:flex flex-col items-end bg-green-500/5 px-4 py-2 rounded-lg border border-green-500/10">
-	// 							<span className="text-green-500 font-semibold flex items-center space-x-2 text-sm">
-	// 								<svg
-	// 									xmlns="http://www.w3.org/2000/svg"
-	// 									className="h-4 w-4"
-	// 									fill="none"
-	// 									viewBox="0 0 24 24"
-	// 									stroke="currentColor"
-	// 									strokeWidth={2}
-	// 								>
-	// 									<path
-	// 										strokeLinecap="round"
-	// 										strokeLinejoin="round"
-	// 										d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.494a1 1 0 01-.212 1.04l-2.257 2.257a16.043 16.043 0 006.586 6.586l2.257-2.257a1 1 0 011.04-.212l4.494 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z"
-	// 									/>
-	// 								</svg>
-	// 								<span>Any Question?</span>
-	// 							</span>
-	// 							<span className="text-white font-bold text-md mt-0.5">
-	// 								+92-3265773718
-	// 							</span>
-	// 						</div>
-
-	// 						<button
-	// 							className="md:hidden p-2 rounded-lg border border-gray-700 text-white z-50 ml-2"
-	// 							onClick={toggleMenu}
-	// 						>
-	// 							{isMenuOpen ? "✕" : "☰"}
-	// 						</button>
-	// 					</div>
-	// 				</div>
-	// 			</div>
-
-	// 			{/* Mobile Menu */}
-	// 			<div
-	// 				className={`md:hidden absolute w-full transition-all duration-300 ease-in-out overflow-hidden ${
-	// 					isMenuOpen
-	// 						? "max-h-screen border-t border-[#1A1A1A] bg-[#0A0A0A]"
-	// 						: "max-h-0"
-	// 				}`}
-	// 				style={{ top: "100%" }}
-	// 			>
-	// 				<div className="px-4 pt-4 pb-8 flex flex-col items-center">
-	// 					<NavLinks isMobile={true} />
-	// 					<div className="mt-4 pt-4 border-t border-[#1A1A1A] w-full flex justify-center">
-	// 						<MusicToggle />
-	// 					</div>
-	// 				</div>
-	// 			</div>
-	// 		</header>
-	// 	);
-	// };
-
-	// Home Section
 	const Header: React.FC = () => {
 		const [isMenuOpen, setIsMenuOpen] = useState(false);
 		const [isPlaying, setIsPlaying] = useState(true);
@@ -839,6 +602,131 @@ const App: React.FC = () => {
 		);
 	};
 
+	const ClientReviews: React.FC = () => {
+		const [index, setIndex] = useState(0);
+		const [isFading, setIsFading] = useState(false);
+
+		// Auto-rotate logic
+		useEffect(() => {
+			const timer = setInterval(() => {
+				triggerTransition((index + 1) % reviews.length);
+			}, 4000); // 4 seconds for better readability
+			return () => clearInterval(timer);
+		}, [index]);
+
+		const triggerTransition = (nextIndex: number) => {
+			setIsFading(true);
+			setTimeout(() => {
+				setIndex(nextIndex);
+				setIsFading(false);
+			}, 400);
+		};
+
+		const currentReview = reviews[index];
+
+		return (
+			<section id="reviews" className="py-24 bg-[#0A0A0A] overflow-hidden">
+				<div className="max-w-5xl mx-auto px-6">
+					{/* Header Section */}
+					<div className="text-center mb-16">
+						<div className="inline-flex items-center space-x-2 bg-[#39FF14]/10 border border-[#39FF14]/20 px-4 py-1.5 rounded-full mb-6">
+							<div className="w-2 h-2 bg-[#39FF14] rounded-full animate-pulse shadow-[0_0_8px_#39FF14]" />
+							<span className="text-[#39FF14] text-[10px] font-black uppercase tracking-[0.3em]">
+								Happy Clients
+							</span>
+						</div>
+
+						<h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none mb-4">
+							Success Stories<span className="text-[#39FF14]">.</span>
+						</h2>
+						<p className="text-[#A0A0A0] text-lg max-w-xl mx-auto font-medium">
+							Hear from the innovators and leaders we've partnered with.
+						</p>
+					</div>
+
+					<div className="relative">
+						{/* The Single Animated Card */}
+						<div
+							className={`relative z-10 p-10 md:p-20 rounded-3xl bg-[#141414] border border-white/5 transition-all duration-500 ease-in-out shadow-2xl ${
+								isFading
+									? "opacity-0 translate-y-4 scale-95"
+									: "opacity-100 translate-y-0 scale-100"
+							}`}
+						>
+							{/* Huge Background Quote Decoration */}
+							<Quote className="absolute top-10 left-10 w-32 h-32 text-[#39FF14]/5 -z-10" />
+
+							<div className="flex flex-col items-center text-center">
+								{/* Stars */}
+								<div className="flex gap-1.5 mb-10">
+									{[...Array(5)].map((_, i) => (
+										<Star
+											key={i}
+											size={20}
+											className={
+												i < currentReview.rating
+													? "fill-[#39FF14] text-[#39FF14] drop-shadow-[0_0_5px_#39FF14]"
+													: "text-gray-800"
+											}
+										/>
+									))}
+								</div>
+
+								{/* Review Content */}
+								<blockquote className="text-2xl md:text-4xl text-white font-bold tracking-tight leading-[1.1] mb-12">
+									"{currentReview.content}"
+								</blockquote>
+
+								{/* Author Branding */}
+								<div className="flex flex-col items-center">
+									<div className="w-16 h-16 rounded-2xl bg-[#39FF14]/5 border border-[#39FF14]/20 flex items-center justify-center text-[#39FF14] font-black text-3xl mb-4 rotate-3 group-hover:rotate-0 transition-transform">
+										{currentReview.name.charAt(0)}
+									</div>
+									<h4 className="text-white text-xl font-bold tracking-tight">
+										{currentReview.name}
+									</h4>
+									<p className="text-[#39FF14] text-xs font-black uppercase tracking-[0.4em] mt-1">
+										{currentReview.role}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						{/* Navigation Dots (Progress Style) */}
+						<div className="mt-12 flex justify-center items-center gap-4">
+							{reviews.map((_, i) => (
+								<button
+									key={i}
+									onClick={() => triggerTransition(i)}
+									className={`transition-all duration-500 rounded-full ${
+										i === index
+											? "w-10 h-1.5 bg-[#39FF14] shadow-[0_0_15px_#39FF14]"
+											: "w-1.5 h-1.5 bg-white/10 hover:bg-white/30"
+									}`}
+								/>
+							))}
+						</div>
+
+						{/* Desktop Arrows */}
+						<button
+							onClick={() =>
+								triggerTransition((index - 1 + reviews.length) % reviews.length)
+							}
+							className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 lg:-translate-x-24 p-4 text-white/10 hover:text-[#39FF14] transition-all hidden md:block"
+						>
+							<ChevronLeft size={48} strokeWidth={1} />
+						</button>
+						<button
+							onClick={() => triggerTransition((index + 1) % reviews.length)}
+							className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 lg:translate-x-24 p-4 text-white/10 hover:text-[#39FF14] transition-all hidden md:block"
+						>
+							<ChevronRight size={48} strokeWidth={1} />
+						</button>
+					</div>
+				</div>
+			</section>
+		);
+	};
 	const WhatsAppContact: React.FC = () => {
 		const phoneNumber = "+923265773718";
 		const message = encodeURIComponent(
@@ -865,7 +753,7 @@ const App: React.FC = () => {
 
 	const ContactSection: React.FC = () => {
 		return (
-			<section id="contact" className="py-24  bg-[#0A0A0A]">
+			<section id="contact" className="py-24  bg-[#1A1A1A]">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="bg-[#141414] p-8 md:p-12 rounded-2xl reveal-on-scroll border border-gray-800 flex flex-col items-center text-center">
 						<span className="text-md font-bold uppercase tracking-widest text-accent mb-2 block">
@@ -951,6 +839,7 @@ const App: React.FC = () => {
 				<PortfolioSection />
 				<ServicesSection />
 				<TechStackSection />
+				<ClientReviews />
 				<ContactSection />
 			</main>
 			<Footer />
